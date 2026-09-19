@@ -2,9 +2,13 @@ import { Product } from '../types';
 
 import heroImg from '../assets/images/hero_choc_box_1789784311993.jpg';
 import dateBoxImg from '../assets/images/the_date_box_1789784326464.jpg';
+import dateBoxDetailImg from '../assets/images/date_box_detail_1789815829241.jpg';
 import bestieBoxImg from '../assets/images/the_bestie_box_1789784346764.jpg';
+import bestieBoxDetailImg from '../assets/images/bestie_detail_1789815841816.jpg';
 import crushBoxImg from '../assets/images/the_crush_box_1789784367924.jpg';
+import crushBoxDetailImg from '../assets/images/crush_detail_1789815853632.jpg';
 import birthdayBoxImg from '../assets/images/birthday_box_1789784379691.jpg';
+import birthdayBoxDetailImg from '../assets/images/birthday_detail_1789815864813.jpg';
 
 export const HERO_PRODUCT_IMAGE = heroImg;
 
@@ -21,6 +25,7 @@ export const PRODUCTS: Product[] = [
     weight: "Net Wt. 120g",
     tag: "MOST GIFTED",
     image: dateBoxImg,
+    images: [dateBoxImg, dateBoxDetailImg, heroImg],
     variants: [
       { name: "6 PCS", pieces: 6, price: 299, weight: "Net Wt. 60g" },
       { name: "12 PCS", pieces: 12, price: 499, weight: "Net Wt. 120g" },
@@ -38,6 +43,7 @@ export const PRODUCTS: Product[] = [
     weight: "Net Wt. 110g",
     tag: "BESTSELLER",
     image: bestieBoxImg,
+    images: [bestieBoxImg, bestieBoxDetailImg, heroImg],
     variants: [
       { name: "6 PCS", pieces: 6, price: 269, weight: "Net Wt. 55g" },
       { name: "12 PCS", pieces: 12, price: 449, weight: "Net Wt. 110g" },
@@ -55,6 +61,7 @@ export const PRODUCTS: Product[] = [
     weight: "Net Wt. 100g",
     tag: "NO LABELS",
     image: crushBoxImg,
+    images: [crushBoxImg, crushBoxDetailImg, heroImg],
     variants: [
       { name: "8 PCS", pieces: 8, price: 499, weight: "Net Wt. 100g" },
       { name: "16 PCS", pieces: 16, price: 799, weight: "Net Wt. 200g" },
@@ -72,6 +79,7 @@ export const PRODUCTS: Product[] = [
     weight: "Net Wt. 180g",
     tag: "PARTY PACK",
     image: birthdayBoxImg,
+    images: [birthdayBoxImg, birthdayBoxDetailImg, heroImg],
     variants: [
       { name: "8 PCS", pieces: 8, price: 349, weight: "Net Wt. 90g" },
       { name: "16 PCS", pieces: 16, price: 599, weight: "Net Wt. 180g" },

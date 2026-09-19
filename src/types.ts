@@ -18,6 +18,7 @@ export interface Product {
   audienceLabel: string;
   weight: string;
   image: string;
+  images: string[];
   secondaryImage?: string;
   variants: ProductVariant[];
   tag?: string;

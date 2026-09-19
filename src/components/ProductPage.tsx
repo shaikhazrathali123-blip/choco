@@ -15,6 +15,11 @@ export const ProductPage: React.FC<ProductPageProps> = ({ product, onBack }) => 
   );
   const [quantity, setQuantity] = useState(1);
   const [addedAnimation, setAddedAnimation] = useState(false);
+  
+  const productImages = product.images && product.images.length > 0
+    ? product.images
+    : [product.image];
+  const [activeImageIndex, setActiveImageIndex] = useState(0);
 
   const activeVariant =
     product.variants.find((v) => v.name === selectedVariant) || product.variants[0];
@@ -34,6 +39,14 @@ export const ProductPage: React.FC<ProductPageProps> = ({ product, onBack }) => 
     setTimeout(() => setAddedAnimation(false), 1000);
   };
 
+  const nextImage = () => {
+    setActiveImageIndex((prev) => (prev + 1) % productImages.length);
+  };
+
+  const prevImage = () => {
+    setActiveImageIndex((prev) => (prev - 1 + productImages.length) % productImages.length);
+  };
+
   return (
     <div className="w-full min-h-[calc(100vh-80px)] bg-[#000000] text-[#FFFFFF] py-8 sm:py-16 px-4 sm:px-8">
       <div className="max-w-6xl mx-auto">
@@ -48,26 +61,91 @@ export const ProductPage: React.FC<ProductPageProps> = ({ product, onBack }) => 
         </button>
 
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16 items-start">
-          {/* Large Product Image */}
-          <div className="lg:col-span-7">
+          {/* Product Media Gallery */}
+          <div className="lg:col-span-7 space-y-4">
+            {/* Main Active Image with carousel controls */}
             <motion.div
               initial={{ opacity: 0, scale: 0.96 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ duration: 0.4 }}
-              className="relative border-4 border-[#FFFFFF] bg-[#111111] overflow-hidden shadow-[12px_12px_0px_0px_#222222]"
+              className="relative border-4 border-[#FFFFFF] bg-[#111111] overflow-hidden shadow-[12px_12px_0px_0px_#222222] group"
             >
               <img
-                src={product.image}
-                alt={product.name}
-                className="w-full aspect-[4/4] sm:aspect-[4/3] object-cover"
+                key={activeImageIndex}
+                src={productImages[activeImageIndex]}
+                alt={`${product.name} photo ${activeImageIndex + 1}`}
+                referrerPolicy="no-referrer"
+                className="w-full aspect-square sm:aspect-[4/3] object-cover transition-opacity duration-200"
               />
 
               {product.tag && (
-                <div className="absolute top-4 left-4 bg-[#FFFFFF] text-[#000000] font-punch text-xs sm:text-sm tracking-wider px-3 py-1">
+                <div className="absolute top-4 left-4 bg-[#FFFFFF] text-[#000000] font-punch text-xs sm:text-sm tracking-wider px-3 py-1 z-10">
                   {product.tag}
                 </div>
               )}
+
+              {/* Photo counter chip */}
+              <div className="absolute bottom-4 right-4 bg-[#000000]/80 border border-[#FFFFFF] text-[#FFFFFF] font-punch text-xs tracking-wider px-2.5 py-1 z-10">
+                {activeImageIndex + 1} / {productImages.length}
+              </div>
+
+              {/* Navigation arrows for multiple images */}
+              {productImages.length > 1 && (
+                <>
+                  <button
+                    id="prev-image-btn"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      prevImage();
+                    }}
+                    aria-label="Previous product image"
+                    className="absolute left-3 top-1/2 -translate-y-1/2 bg-[#000000] text-[#FFFFFF] border-2 border-[#FFFFFF] w-10 h-10 flex items-center justify-center font-punch text-lg hover:bg-[#FFFFFF] hover:text-[#000000] transition-colors cursor-pointer z-10 opacity-90 hover:opacity-100"
+                  >
+                    ‹
+                  </button>
+                  <button
+                    id="next-image-btn"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      nextImage();
+                    }}
+                    aria-label="Next product image"
+                    className="absolute right-3 top-1/2 -translate-y-1/2 bg-[#000000] text-[#FFFFFF] border-2 border-[#FFFFFF] w-10 h-10 flex items-center justify-center font-punch text-lg hover:bg-[#FFFFFF] hover:text-[#000000] transition-colors cursor-pointer z-10 opacity-90 hover:opacity-100"
+                  >
+                    ›
+                  </button>
+                </>
+              )}
             </motion.div>
+
+            {/* Thumbnail Row */}
+            {productImages.length > 1 && (
+              <div className="flex gap-3 overflow-x-auto pb-2">
+                {productImages.map((imgSrc, idx) => {
+                  const isActive = idx === activeImageIndex;
+                  return (
+                    <button
+                      key={idx}
+                      id={`thumb-btn-${idx}`}
+                      onClick={() => setActiveImageIndex(idx)}
+                      className={`relative w-20 h-20 sm:w-24 sm:h-24 flex-shrink-0 border-2 overflow-hidden cursor-pointer transition-all ${
+                        isActive
+                          ? 'border-[#FFFFFF] shadow-[4px_4px_0px_0px_#FFFFFF] scale-100'
+                          : 'border-[#444444] opacity-60 hover:opacity-100 hover:border-[#AAAAAA]'
+                      }`}
+                      aria-label={`View photo ${idx + 1}`}
+                    >
+                      <img
+                        src={imgSrc}
+                        alt={`${product.name} thumbnail ${idx + 1}`}
+                        referrerPolicy="no-referrer"
+                        className="w-full h-full object-cover"
+                      />
+                    </button>
+                  );
+                })}
+              </div>
+            )}
           </div>
 
           {/* Product Details & Purchase Form */}
