@@ -1,0 +1,6 @@
+{
+  "name": "CHOC",
+  "description": "Gen-Z chocolate gifting for your favorite person. Bold, fun, affordable chocolate boxes.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
