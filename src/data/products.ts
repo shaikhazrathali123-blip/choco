@@ -1,6 +1,6 @@
 import { Product } from '../types';
 
-import heroImg from '../assets/images/hero_choc_box_1789784311993.jpg';
+import heroImg from '../assets/images/the_date_box_1789784326464.jpg';
 import dateBoxImg from '../assets/images/the_date_box_1789784326464.jpg';
 import dateBoxDetailImg from '../assets/images/date_box_detail_1789815829241.jpg';
 import bestieBoxImg from '../assets/images/the_bestie_box_1789784346764.jpg';
